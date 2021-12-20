@@ -41,6 +41,7 @@ int ExtSerial::open_port(const char *PortName, speed_t baud)
 
     fd = open(PortName, O_RDWR| O_NOCTTY | O_SYNC);
     if(fd > 0){
+        qDebug() << "Port open" << PortName;
         fcntl(fd, F_SETFL, 0);
         memset (&tty, 0, sizeof tty);
 
@@ -84,6 +85,7 @@ int ExtSerial::open_port(const char *PortName, speed_t baud)
 
 int ExtSerial::close_port(void)
 {
+    qDebug() << "Port Closed";
     return close(fd);
 }
 

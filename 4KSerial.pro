@@ -11,11 +11,13 @@ CONFIG += c++11
 SOURCES += \
     extserial.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    upgradePIC.cpp
 
 HEADERS += \
     extserial.h \
-    mainwindow.h
+    mainwindow.h \
+    upgradePIC.h
 
 FORMS += \
     mainwindow.ui

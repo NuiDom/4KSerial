@@ -11,6 +11,7 @@
 #include <sys/ioctl.h>
 #include <QThread>
 #include <QElapsedTimer>
+#include <QtCore>
 
 #include "extserial.h"
 
@@ -101,7 +102,25 @@ int ExtSerial::write_port(QString Buffer)
     return write (fd, B, nCMDLength);
 }
 
+int ExtSerial::write_port_bin(QByteArray Buffer, int nCMDLength)
+{
+int nBytesWritten;
 
+
+  //  this->clear_port();
+     // Write Command to port
+    nBytesWritten=write (fd, Buffer, nCMDLength);
+
+    // Error checking
+    if(nBytesWritten!=nCMDLength)
+        qDebug() << "Error writing to serial port: Bytes Written = " << nCMDLength;
+#ifdef SERIAL_DEBUG
+    else
+        qDebug() << "Bytes Written= " << nBytesWritten;
+#endif
+
+    return(0);
+}
 
 int ExtSerial::read_port(int Timeout)
 {
@@ -178,3 +197,11 @@ void ExtSerial::clear_port()
     EXT_COMMAND_RECIEVED=false;
 }
 
+void msdelay(int msec)
+{
+    QEventLoop loop;
+
+    QTimer::singleShot(msec, &loop, &QEventLoop::quit);
+
+    loop.exec();
+}

@@ -8,6 +8,8 @@
 #include <QByteArray>
 #include <termios.h>
 
+void msdelay(int msec);
+
 class ExtSerial : public QObject
 {
     Q_OBJECT
@@ -25,6 +27,7 @@ public:
     int read_lines(int);
     void clear_port(void);
 
+
     bool EXT_COMMAND_RECIEVED;
     QString EXT_COMMAND;
     int nBufferPosition;
@@ -39,6 +42,7 @@ signals:
 private:
 
       int fd; /* File descriptor for the port */
+
 };
 
 #endif // EXTSERIAL_H

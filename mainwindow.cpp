@@ -3,15 +3,18 @@
 #include "extserial.h"
 #include <QtCore>
 #include <QtGui>
+#include <upgradePIC.h>
 
-ExtSerial Serial;
+extern ExtSerial Serial;
+upgradePIC Upgrade;
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    qDebug() << "Hello World";
+    connect(this, SIGNAL(signalProgramPIC()), &Upgrade, SLOT(ProgramPIC()));
+//    ui->progressBarUpgrade->setValue(0);
 }
 
 MainWindow::~MainWindow()
@@ -43,9 +46,10 @@ void MainWindow::on_pushButton_2_clicked()
 void MainWindow::on_pushButton_4_clicked()
 {
     Serial.open_port("/dev/ttyACM0",B115200);
-    Serial.write_port("UPGRADE");
+    Serial.write_port("BOOTLOADER");
+    msdelay(50);
     Serial.close_port();
-    qDebug() << "UPGRADE";
+    qDebug() << "BOOTLOADER";
 }
 
 
@@ -54,5 +58,11 @@ void MainWindow::on_pushButton_5_clicked()
     Serial.write_port("JUMP");
     qDebug() << "JUMP";
     Serial.close_port();
+}
+
+
+void MainWindow::on_Upgrade_PushButton_clicked()
+{
+    emit signalProgramPIC();
 }
 

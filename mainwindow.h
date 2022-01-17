@@ -26,6 +26,15 @@ private slots:
 
     void on_pushButton_5_clicked();
 
+    void on_Upgrade_PushButton_clicked();
+
+
+public slots:
+    void slotPICUpgrade(QString Filename);
+
+signals:
+     void signalProgramPIC();
+
 private:
     Ui::MainWindow *ui;
 };
